@@ -2,8 +2,9 @@
 
 In this analysis, the primary goal is to measure the open bottom and charm production in in Au+Au collisions, which is studied by the measurement the electrons from the open heavy flavor hadrons via semi-leptonic decays. This is the fist time at STAR measured the charm and bottom quark production separately in heavy-ion collisions by the track impact parameter method.
 
-The details can be found in this [Phd. thesis] [1] chapter 4.
-The details can be found in this [Phd. thesis] (https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf "Tite") chapter 4.
+The details can be found in this [Phd. thesis] [https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf] chapter 4.
+
+The details can be found in this [Phd. thesis](https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf "Tite") chapter 4.
 
 [1]: https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf/ "Title"
 
