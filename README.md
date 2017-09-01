@@ -4,7 +4,8 @@ In this analysis, the primary goal is to measure the open bottom and charm produ
 
 The details can be found in this [Phd. thesis] https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf chapter 4.
 
-[1]: https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf "Title"
+[1]: https://drupal.star.bnl.gov/STAR/files/PhDthesis_0.pdf/ "Title"
+
 **How to run the analysis**
 
 1. Produce the heavy flavor decay electron DCA template from data daiven fast simulation
