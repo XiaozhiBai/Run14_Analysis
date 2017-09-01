@@ -7,10 +7,10 @@
 ## How to run the analysis
 ---------------------------
 ### 1. Produce the heavy flavor decay electron DCA template from data daiven fast simulation.
-       >> `cd FastSim`
-       >> `starver SL16d`
-       >> `source setup.csh`
-       >> `cons.csh`
+        `cd FastSim`
+        `starver SL16d`
+        `source setup.csh`
+        `cons.csh`
 ### 2. Photonic electron back ground DCA can be produced by the Hijing+Geant4 full detector simulation. 
 
 ### 3. Hadron back ground extracted from data.
