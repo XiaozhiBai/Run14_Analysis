@@ -1,6 +1,6 @@
 /*/-----------------
 
-  This class is for the eventGen production
+  \class is for the eventGen decay tree production
 
   Auther:  Xiaozhi 5/1/2015 xiaozhi@uic.edu
 
@@ -25,19 +25,20 @@
   #endif
 */
 
+#ifndef StEvtGenDecayMaker__h
+#define StEvtGenDecayMaker__h
+
 #include <iostream>
 #include <string>
 #include <list>
 #include <cmath>
 #include <vector>
 #include <fstream>
-
 #include <TFile.h>
 #include <TH1F.h>
 #include"TParticle.h"
 #include"StLorentzVectorF.hh"
 #include"TLorentzVector.h"
-
 #include"TClonesArray.h"
 #include "TVirtualMCDecayer.h"
 #include "TClonesArray.h"
@@ -66,7 +67,6 @@ class StEvtGenDecayMaker : public StMaker
   void SaveTree();
   
   void get_kinematics(Double_t& pt, Double_t& eta, Double_t& phi, Double_t& px, Double_t& py, Double_t& pz,Double_t &E,Double_t ); 
-
   void ResolveDecay(StarEvtGenDecayer *Decay_Event,int &Ndaughter,Int_t Parent_pdg,TLorentzVector *p_mom,TLorentzVector *r_pos,Int_t mpdg[ ],double mPx[ ],double mPy[ ],double  mPz[ ], double mE[ ], double mvx[ ], double mvy[ ], double mvz[ ], double mct[ ], Int_t dpdg[ ], Int_t dParent_pdg[ ], double dPx[ ],double dPy[ ], double  dPz[ ],double dE[ ],double dRPx[ ],double dRPy[ ], double  dRPz[ ], double dvx[ ], double dvy[ ], double dvz[ ], double  dct[ ],double  d3Ddca[ ],double  ddcaXY[ ],double  ddcaZ[ ],double  d3DRdca[ ],double  dRdcaXY[ ],double  dRdcaZ[ ],Int_t Ncent[],double Vtx[],double Vty[],double Vtz[]);
 
   void SaveDaughter(TParticle *Particle,int &Ndaughter,int, TLorentzVector *p_mom, TLorentzVector *r_pos, Int_t mpdg[ ],double mPx[ ],double mPy[ ],double  mPz[ ], double mE[ ], double mvx[ ], double mvy[ ], double mvz[ ], double mct[ ], Int_t dpdg[ ], Int_t dParent_pdg[ ], double dPx[ ],double dPy[ ], double  dPz[ ],double dE[ ],double dRPx[ ],double dRPy[ ], double  dRPz[ ], double dvx[ ], double dvy[ ], double dvz[ ], double  dct[ ],double d3Ddca[],double ddcaXY[],double  ddcaZ[],double d3DRdca[],double dRdcaXY[],double  dRdcaZ[],Int_t Ncent[],double Vtx[],double Vty[],double Vtz[]);
@@ -90,3 +90,5 @@ class StEvtGenDecayMaker : public StMaker
 
   ClassDef(StEvtGenDecayMaker, 1)
     };
+
+#endif

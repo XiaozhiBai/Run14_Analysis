@@ -16,10 +16,7 @@
 #include "EvtGenBase/EvtStdlibRandomEngine.hh"
 #include "EvtGenBase/EvtAbsRadCorr.hh"
 #include "EvtGenBase/EvtDecayBase.hh"
-
-//#ifdef EVTGEN_EXTERNAL
 #include "EvtGenExternal/EvtExternalGenList.hh"
-//#endif
 
 #include <iostream>
 #include <string>
@@ -27,11 +24,9 @@
 #include <cmath>
 #include <vector>
 #include <fstream>
-
 #include <TFile.h>
 #include <TH1F.h>
 #include <TF1.h>
-
 #include"TParticle.h"
 #include"TLorentzVector.h"
 #include"TClonesArray.h"
@@ -74,25 +69,18 @@ StEvtGenDecayMaker::~StEvtGenDecayMaker()
 }
 StEvtGenDecayMaker::StEvtGenDecayMaker(int Parent_pdg,int Number_Event,TString outfile)
 {
-
   loadAllDistributions();
   parent_PDG=Parent_pdg;
   NEvet=Number_Event;
   outfile_name=outfile;
-   // TFile *input=new TFile("Decay_table/Weight.root","READ");
-   // Weight_pt=(TH1D *) input->Get("Pi"); 
-
-   // TFile *input=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Charm_pp200_data.root","READ");
-   // Weight_pt=(TF1 *) input->Get("levy"); 
-
+  // TFile *input=new TFile("Decay_table/Weight.root","READ");
+  // Weight_pt=(TH1D *) input->Get("Pi"); 
+  // TFile *input=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Charm_pp200_data.root","READ");
+  // Weight_pt=(TF1 *) input->Get("levy"); 
   TFile *input=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Charm_spectra_weight.root","READ");
   //  Weight_pt=(TH1D *) input->Get("D_spectra_levy"); // yifei 
   //  Weight_pt=(TH1D *) input->Get("D_spectra_hf1PowerLaw");// from Mustafa 
   //Weight_ptgr_levy_pythia=(TH1D *) input->Get("gr_levy_pythia");  
-
-
-
-  
   levy_pythia= (TH1F *) input->Get("levy_pythia"); 
   levy_fonll= (TH1F *) input->Get("levy_fonll"); 
   D0YVsPty= (TH1D *) input->Get("D0YVsPty"); 
@@ -106,7 +94,6 @@ void StEvtGenDecayMaker::OpenFile()
 }
 void StEvtGenDecayMaker::Write()
 {
-
   mfile->cd();
   Tree->Write();
   mfile->Close();
@@ -120,16 +107,16 @@ void StEvtGenDecayMaker::make()
   unsigned int stime = fabs(tmp)/myRandom->Rndm() ;
   EvtStdlibRandomEngine * eng = new EvtStdlibRandomEngine();
   eng->setSeed(stime);
- //  eng->setSeed(NULL);
+  //  eng->setSeed(NULL);
   EvtRandom::setRandomEngine((EvtRandomEngine*)eng);
   EvtAbsRadCorr* radCorrEngine = 0;
   std::list<EvtDecayBase*> extraModels;
   
-//#ifdef EVTGEN_EXTERNAL
+  //#ifdef EVTGEN_EXTERNAL
   EvtExternalGenList genList;
   radCorrEngine = genList.getPhotosModel();
   extraModels = genList.getListOfModels();
-//#endif
+  //#endif
   
   //Initialize the generator - read in the decay table and particle properties
   TString Decay_2010_DEC="/star/u/xiao00/Run14/work_AuAu200_NPE/Simulation_NPE/Event_Gen/evtgen/1.3.0/DECAY_2010.DEC";
@@ -137,10 +124,9 @@ void StEvtGenDecayMaker::make()
   EvtGen *myGenerator=new EvtGen(Decay_2010_DEC,Evt_pdl,(EvtRandomEngine*)eng,radCorrEngine, &extraModels);
   StarEvtGenDecayer *Decay_Event=new StarEvtGenDecayer(myGenerator); 
   EvtId Parent_EvtGenID=EvtPDL::evtIdFromLundKC(parent_PDG); 
- //    TString Decay_file="/star/u/xiao00/test_EvetGen/Decay_table/Pi0Gamma.DEC";
+  //    TString Decay_file="/star/u/xiao00/test_EvetGen/Decay_table/Pi0Gamma.DEC";
   //  TString Decay_file="/star/u/xiao00/test_EvetGen/Decay_table/D0.DEC";
-     TString Decay_file="/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/B_test.DEC";
-
+  TString Decay_file="/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/B_test.DEC";
   //  TString Decay_file="/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/B_test.DEC";
   //  TString Decay_file="/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/NPE_8_14.DEC";
   //  if(parent_PDG==111||parent_PDG==221) // pi0 and eta
@@ -172,11 +158,9 @@ void StEvtGenDecayMaker::make()
   double  dPx[MaxDaughter];
   double  dPy[MaxDaughter];
   double  dPz[MaxDaughter];
-
   double  dRPx[MaxDaughter];
   double  dRPy[MaxDaughter];
   double  dRPz[MaxDaughter];
-
   double  dE[MaxDaughter];  
   double  dvx[MaxDaughter];
   double  dvy[MaxDaughter];
@@ -211,7 +195,6 @@ void StEvtGenDecayMaker::make()
   Tree->Branch("dRPx",dRPx,"dRPx[Ndaughter]/D");
   Tree->Branch("dRPy",dRPy,"dRPy[Ndaughter]/D");
   Tree->Branch("dRPz",dRPz,"dRPz[Ndaughter]/D");
- 
   Tree->Branch("dE",dE,"dE[Ndaughter]/D");
   Tree->Branch("dvx",dvx,"dvx[Ndaughter]/D");
   Tree->Branch("dvy",dvy,"dvy[Ndaughter]/D");
@@ -220,7 +203,6 @@ void StEvtGenDecayMaker::make()
   Tree->Branch("d3Ddca",d3Ddca,"d3Ddca[Ndaughter]/D");
   Tree->Branch("ddcaXY",ddcaXY,"ddcaXY[Ndaughter]/D");
   Tree->Branch("ddcaZ",ddcaZ,"ddcaZ[Ndaughter]/D");
-
   Tree->Branch("d3DRdca",d3DRdca,"d3DRdca[Ndaughter]/D");
   Tree->Branch("dRdcaXY",dRdcaXY,"dRdcaXY[Ndaughter]/D");
   Tree->Branch("dRdcaZ",dRdcaZ,"dRdcaZ[Ndaughter]/D");
@@ -228,33 +210,20 @@ void StEvtGenDecayMaker::make()
   Tree->Branch("Vtx",Vtx,"Vtx[Ndaughter]/D");
   Tree->Branch("Vty",Vty,"Vty[Ndaughter]/D");
   Tree->Branch("Vtz",Vtz,"Vtz[Ndaughter]/D");
-
-
- 
  
   char buf[1024]; 
-  
   for(Int_t iEvet=0;iEvet<NEvet;iEvet++){  //  Event Loop              
-    
     // cout<< M_D_0<<endl;
     if(iEvet%10000==0)
       cout<< "---------working on Event "<<iEvet<<endl;
-    
     Ndaughter=0;        
     Double_t m0= EvtPDL::getMass(Parent_EvtGenID);
-    
-   
     get_kinematics(pt,eta,phi,px,py,pz,E,m0);
-
     //   Double_t E=sqrt(m0*m0+px*px+py*py+pz*pz);
-
-    
     TLorentzVector *p_mom=new TLorentzVector(px,py,pz,E);  
     TLorentzVector *r_pos=new TLorentzVector(0,0,0,0);
     ResolveDecay(Decay_Event,Ndaughter,parent_PDG,p_mom,r_pos,mpdg,mPx,mPy, mPz,mE,mvx,mvy,mvz,mct,dpdg,dParent_pdg,dPx,dPy,dPz,dE,dRPx,dRPy,dRPz,dvx,dvy,dvz,dct,d3Ddca,ddcaXY,ddcaZ,d3DRdca,dRdcaXY,dRdcaZ,Ncent,Vtx,Vty,Vtz);   
-    
- 
-    
+
     Tree->Fill();
     
     delete p_mom;
@@ -262,13 +231,11 @@ void StEvtGenDecayMaker::make()
     
   }// Evt loop
 }
-
 void StEvtGenDecayMaker::ResolveDecay(StarEvtGenDecayer *Decay_Event,int &Ndaughter,Int_t Parent_pdg,TLorentzVector *p_mom,TLorentzVector *r_pos,Int_t mpdg[ ],double mPx[ ],double mPy[ ],double  mPz[ ], double mE[ ], double mvx[ ], double mvy[ ], double mvz[ ], double mct[ ], Int_t dpdg[ ], Int_t dParent_pdg[ ], double dPx[ ],double dPy[ ], double  dPz[ ],double dE[ ],double dRPx[ ],double dRPy[ ], double  dRPz[ ], double dvx[ ], double dvy[ ], double dvz[ ], double  dct[ ],double  d3Ddca[ ],double  ddcaXY[ ],double  ddcaZ[ ],double  d3DRdca[ ],double  dRdcaXY[ ],double  dRdcaZ[ ],Int_t Ncent[],double Vtx[],double Vty[],double Vtz[])
 {
   //return;
   int N=0;
   TClonesArray *Array=new TClonesArray("TParticle");
-  
   Decay_Event->Decay(Parent_pdg,p_mom);
   // Decay_Event->setVertex(r_pos);
   N=Decay_Event->ImportParticles(Array);   
@@ -277,7 +244,6 @@ void StEvtGenDecayMaker::ResolveDecay(StarEvtGenDecayer *Decay_Event,int &Ndaugh
       TParticle* particle = (TParticle*)Array->At(iDaughter);
       //    switch (abs(dpdg)==22)
       SaveDaughter(particle,Ndaughter,Parent_pdg,p_mom,r_pos,mpdg,mPx,mPy,mPz,mE,mvx,mvy,mvz,mct,dpdg,dParent_pdg,dPx,dPy,dPz,dE,dRPx,dRPy,dRPz,dvx,dvy,dvz,dct,d3Ddca,ddcaXY,ddcaZ,d3DRdca,dRdcaXY,dRdcaZ,Ncent,Vtx,Vty,Vtz);
-      
       //  continue;
       if(Continue_Decay(particle->GetPdgCode()))
       	{
@@ -308,60 +274,60 @@ void StEvtGenDecayMaker::SaveDaughter(TParticle *particle,int &Ndaughter,Int_t P
   TVector3 const vertex = getVertex(cent);
   //  if(vertex.z()<0||vertex.z()>30000) return;
   //cout<< cent<<endl;
-   v00.SetXYZ(particle->Vx()*1000.,particle->Vy()*1000.,particle->Vz()*1000.);
-   // v00.SetXYZ(0.,0.,0.); //test the smear dca  
-   v00+=vertex;
+  v00.SetXYZ(particle->Vx()*1000.,particle->Vy()*1000.,particle->Vz()*1000.);
+  // v00.SetXYZ(0.,0.,0.); //test the smear dca  
+  v00+=vertex;
 
-   particle-> Momentum(eMom);
-   TLorentzVector const eRMom = smearMom(0,eMom);
-   TVector3 const eRPos = smearPosData(0,vertex.z(),cent, eRMom, v00);  
-   // TVector3 const vertex(0., 0., 0.);
-   float const eDca =  dcaSigned(eMom.Vect(), v00, vertex);
-   float const eRDca = dcaSigned(eRMom.Vect(), eRPos, vertex);
+  particle-> Momentum(eMom);
+  TLorentzVector const eRMom = smearMom(0,eMom);
+  TVector3 const eRPos = smearPosData(0,vertex.z(),cent, eRMom, v00);  
+  // TVector3 const vertex(0., 0., 0.);
+  float const eDca =  dcaSigned(eMom.Vect(), v00, vertex);
+  float const eRDca = dcaSigned(eRMom.Vect(), eRPos, vertex);
    
-   float const eDcaXY = dcaXY(eMom.Vect(), v00, vertex);
-   float const eRDcaXY = dcaXY(eRMom.Vect(), eRPos, vertex);
+  float const eDcaXY = dcaXY(eMom.Vect(), v00, vertex);
+  float const eRDcaXY = dcaXY(eRMom.Vect(), eRPos, vertex);
    
-   float const eDcaZ = dcaZ(eMom.Vect(), v00, vertex);
-   float const eRDcaZ = dcaZ(eRMom.Vect(), eRPos, vertex);
+  float const eDcaZ = dcaZ(eMom.Vect(), v00, vertex);
+  float const eRDcaZ = dcaZ(eRMom.Vect(), eRPos, vertex);
    
-    // cout<< cent<<"  "<< eRPos.x()<<"  "<<endl;//particle->Px()<<"  "<<fPionMomResolution->Eval(eMom.Py())<<endl;
-    // cout<< cent<<"  "<< eRDca<<"  "<<eDca<<endl;//particle->Px()<<"  "<<fPionMomResolution->Eval(eMom.Py())<<endl;
+  // cout<< cent<<"  "<< eRPos.x()<<"  "<<endl;//particle->Px()<<"  "<<fPionMomResolution->Eval(eMom.Py())<<endl;
+  // cout<< cent<<"  "<< eRDca<<"  "<<eDca<<endl;//particle->Px()<<"  "<<fPionMomResolution->Eval(eMom.Py())<<endl;
   
-    mpdg[Ndaughter]=Parent_pdg;
-    mPx[Ndaughter]=p_mom->Px();
-    mPy[Ndaughter]=p_mom->Py();
-    mPz[Ndaughter]=p_mom->Pz();
-    mE[Ndaughter]=p_mom->E();  
-    mvx[Ndaughter]=r_pos->X();
-    mvy[Ndaughter]=r_pos->Y();
-    mvz[Ndaughter]=r_pos->Z();
-    mct[Ndaughter]=r_pos->T();
-    dpdg[Ndaughter]=particle->GetPdgCode();
-    dParent_pdg[Ndaughter]=particle->GetFirstMother();
-    dPx[Ndaughter]=particle->Px();
-    dPy[Ndaughter]=particle->Py();
-    dPz[Ndaughter]=particle->Pz();
-    dRPx[Ndaughter]=eRMom.Px();
-    dRPy[Ndaughter]=eRMom.Py();
-    dRPz[Ndaughter]=eRMom.Pz();
-    dE[Ndaughter]=particle->Energy();  
-    dvx[Ndaughter]=particle->Vx();
-    dvy[Ndaughter]=particle->Vy();
-    dvz[Ndaughter]=particle->Vz();
-    dct[Ndaughter]=particle->T();
-    d3Ddca[Ndaughter]=eDca;
-    ddcaXY[Ndaughter]=eDcaXY;
-    ddcaZ[Ndaughter]=eDcaZ;
-    d3DRdca[Ndaughter]=eRDca;
-    dRdcaXY[Ndaughter]=eRDcaXY;
-    dRdcaZ[Ndaughter]=eRDcaZ;
-    Ncent[Ndaughter]=cent;
-    Vtx[Ndaughter]=vertex.x();   
-    Vty[Ndaughter]=vertex.y();
-    Vtz[Ndaughter]=vertex.z();
+  mpdg[Ndaughter]=Parent_pdg;
+  mPx[Ndaughter]=p_mom->Px();
+  mPy[Ndaughter]=p_mom->Py();
+  mPz[Ndaughter]=p_mom->Pz();
+  mE[Ndaughter]=p_mom->E();  
+  mvx[Ndaughter]=r_pos->X();
+  mvy[Ndaughter]=r_pos->Y();
+  mvz[Ndaughter]=r_pos->Z();
+  mct[Ndaughter]=r_pos->T();
+  dpdg[Ndaughter]=particle->GetPdgCode();
+  dParent_pdg[Ndaughter]=particle->GetFirstMother();
+  dPx[Ndaughter]=particle->Px();
+  dPy[Ndaughter]=particle->Py();
+  dPz[Ndaughter]=particle->Pz();
+  dRPx[Ndaughter]=eRMom.Px();
+  dRPy[Ndaughter]=eRMom.Py();
+  dRPz[Ndaughter]=eRMom.Pz();
+  dE[Ndaughter]=particle->Energy();  
+  dvx[Ndaughter]=particle->Vx();
+  dvy[Ndaughter]=particle->Vy();
+  dvz[Ndaughter]=particle->Vz();
+  dct[Ndaughter]=particle->T();
+  d3Ddca[Ndaughter]=eDca;
+  ddcaXY[Ndaughter]=eDcaXY;
+  ddcaZ[Ndaughter]=eDcaZ;
+  d3DRdca[Ndaughter]=eRDca;
+  dRdcaXY[Ndaughter]=eRDcaXY;
+  dRdcaZ[Ndaughter]=eRDcaZ;
+  Ncent[Ndaughter]=cent;
+  Vtx[Ndaughter]=vertex.x();   
+  Vty[Ndaughter]=vertex.y();
+  Vtz[Ndaughter]=vertex.z();
 
-    Ndaughter++;
+  Ndaughter++;
     
 }
 // void StEvtGenDecayMaker::get_kinematics(Double_t& pt, Double_t& eta, Double_t& phi, Double_t& px, Double_t& py, Double_t& pz)
@@ -395,7 +361,6 @@ void StEvtGenDecayMaker::get_kinematics(Double_t& pt, Double_t& y, Double_t& phi
   E=mT*cosh(y);
   
   // pz = pt / tan(2 * atan(exp(-eta)));
-
 }
 
 void StEvtGenDecayMaker::SaveTree()
@@ -406,35 +371,23 @@ void StEvtGenDecayMaker::SaveTree()
   
   // Tree->Delete();
   // delete Tree;
-  
-  
 }
 bool StEvtGenDecayMaker::Continue_Decay(int pdg)
 {
-
-
   bool bContinue=false;
   if(abs(pdg)%1000/100==4||abs(pdg)%1000/100==5)
     bContinue=true; 
   else  if(abs(pdg)%10000/1000==4||abs(pdg)%10000/1000==5)
     bContinue=true; 
-  
   // bool bContinue=false;
-  
   // if(fabs(pdg)==511) // B0
   //   bContinue=true;
-
   // if(fabs(pdg)==421) // D0
   //   bContinue=true;
-
   // if(fabs(pdg)==413) // D*
   //   bContinue=true;
   // if(fabs(pdg)==411) // D+
   //   bContinue=true;
-
-
   return bContinue;
-
-
 }
 
