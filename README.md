@@ -11,11 +11,18 @@
         starver SL16d
         source setup.csh
         cons.csh
+        ./run_EvtGenDecay.csh  %% To run the EvtGen Production and saved the intrestiong variable in the tree
+        ./runAna.csh	       %% Analysis the produce tree      
 ### 2. Photonic electron back ground DCA can be produced by the Hijing+Geant4 full detector simulation. 
 
 ### 3. Hadron back ground extracted from data.
 
 ### 4. Inclusive electron and Photonic electron pair reconstructed from data.
-  
-
+       cd Data
+       starver SL16d
+       cons	  
+       ./runTest.sh %% To run the Analysis tree, saved the Inclusive electron and Photonic electron pairs.
+       cd submit    %% Directory for the job submission.
+        star-submit submit_16d.xml	%% submit the Job, Please notes, the default input file list is Minimum-Bias Trigger, for the BEMC trigger, you must replace the file list from Ana_mb_16d.list to Ana_htb_16d.list 
+        ./hadd.sh  0 production temp 20 %% Merge the output as a single file for the analysis  
 
