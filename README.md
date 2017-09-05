@@ -14,18 +14,18 @@
         ./run_EvtGenDecay.csh  %% To run the EvtGen Production and saved the intrestiong variable in the tree
         ./runAna.csh	       %% Analysis the produce tree      
 ### 2. Photonic electron back ground DCA can be produced by the Hijing+Geant4 full detector simulation. 
-#### Produce the Hijing and Geant sample
+#### 2.1 Produce the Hijing and Geant sample
         cd PhotonicElectronSim/Pico_mc
         starver SL16d	
         cons
         ./submit_full.sh start#  #nRuns  %% submit the job to make the mass production, it will be spend 3-4h per job, the full production can be found at /star/u/kunsu/auau200GeVRun14/simulation_RealDetector_RealParticle_SL16d_Pixelisation/files_full/* 
-     #### Saved all the intrestiong variable in the analysis tree based on the produced PicoTree.
+#### 2.2 Saved all the intrestiong variable in the analysis tree based on the produced PicoTree.
         cd PhotonicElectronSim/Ana_mc
         starver SL16d
         cons  
         ./run_Test.sh  %% To run a few test files.
         star-submit submit.xml	 %% submit the job to analysis the full production, clean all the output directory before submit the job.
-    #### Analysis the McPico tree. fill the histogram
+#### 2.3 Analysis the McPico tree. fill the histogram
         cd /PhotonicElectronSim/Histogram_mc
         starver SL16d
         cons
