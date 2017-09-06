@@ -13,7 +13,7 @@
         cons.csh
         ./run_EvtGenDecay.csh  %% To run the EvtGen Production and saved the intrestiong variable in the tree
         ./runAna.csh	       %% Analysis the produce tree      
-### 2. Photonic electron back ground DCA can be produced by the Hijing+Geant4 full detector simulation. 
+### 2. Photonic electron background DCA can be produced by the Hijing+Geant4 full detector simulation. 
 #### 2.1 Produce the Hijing and Geant sample
         cd PhotonicElectronSim/Pico_mc
         starver SL16d	
@@ -31,8 +31,15 @@
         cons
         ./run_test.sh %%to run a few test files 
         star-submit submit.xml %% submit the job to analysis the full production, clean all the output directory before submit the job.  
- ### 3. Hadron back ground extracted from data.
-
+ ### 3. Hadron background extracted from data.
+#### The code can be found at https://github.com/XiaozhiBai/Run14_PicoReader. Notes, we Saved only the laptons candidate in the analysis tree on the RCF, so the hadron background templte and purity study are still based on the PicoDst, which is on the PDSF.
+       cd /global/homes/x/xiao00/pwg_disk/AuAu14/Run14_PicoReader
+       starver SL16d
+       cons
+       cd Submit_Job
+       ./submitAnaTreePDSF.sh mb 0 107 167 %% submit the job from day 107 to 167
+       cd ../Merge_files 
+       ././run_hadd.sh 0 100   %% submit the job to merge the root files.
 ### 4. Inclusive electron and Photonic electron pair reconstructed from data.
        cd Data
        starver SL16d
