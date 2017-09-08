@@ -8,7 +8,7 @@
 #ifndef StEvtGen_Daughter_h
 #define StEvtGen_Daughter_h
 
-#include <TROOT.h>
+//#include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
 
@@ -33,11 +33,23 @@ public :
    Double_t        dPx[50];   //[Ndaughter]
    Double_t        dPy[50];   //[Ndaughter]
    Double_t        dPz[50];   //[Ndaughter]
+   Double_t        dRPx[50];   //[Ndaughter]
+   Double_t        dRPy[50];   //[Ndaughter]
+   Double_t        dRPz[50];   //[Ndaughter]
+  
    Double_t        dE[50];   //[Ndaughter]
    Double_t        dvx[50];   //[Ndaughter]
    Double_t        dvy[50];   //[Ndaughter]
    Double_t        dvz[50];   //[Ndaughter]
    Double_t        dct[50];   //[Ndaughter]
+
+   Double_t        d3Ddca[50];   //[Ndaughter]
+   Double_t        ddcaXY[50];   //[Ndaughter]
+   Double_t        ddcaZ[50];   //[Ndaughter]
+   Double_t        d3DRdca[50];   //[Ndaughter]
+   Double_t        dRdcaXY[50];   //[Ndaughter]
+   Double_t        dRdcaZ[50];   //[Ndaughter]
+   Int_t         Ncent[50];   //[Ndaughter]
 
    // List of branches
    TBranch        *b_Ndaughter;   //!
@@ -45,6 +57,10 @@ public :
    TBranch        *b_mPx;   //!
    TBranch        *b_mPy;   //!
    TBranch        *b_mPz;   //!
+   TBranch        *b_dRPx;   //!
+   TBranch        *b_dRPy;   //!
+   TBranch        *b_dRPz;   //!
+
    TBranch        *b_mE;   //!
    TBranch        *b_dpdg;   //!
    TBranch        *b_dParent_pdg;   //!
@@ -56,6 +72,13 @@ public :
    TBranch        *b_dvy;   //!
    TBranch        *b_dvz;   //!
    TBranch        *b_dct;   //!
+   TBranch        *b_d3Ddca;   //!
+   TBranch        *b_ddcaXY;   //!
+   TBranch        *b_ddcaZ;   //!
+   TBranch        *b_d3DRdca;   //!
+   TBranch        *b_dRdcaXY;   //!
+   TBranch        *b_dRdcaZ;   //!
+   TBranch        *b_Ncent;   //!
 
    StEvtGen_Daughter();
    virtual ~StEvtGen_Daughter();

@@ -1,8 +1,8 @@
 
 #define StEvtGen_Daughter_cxx
 #include "StEvtGen_Daughter.h"
-//#include <TH2F.h>
-//#include <TStyle.h>
+#include <TH2.h>
+#include <TStyle.h>
 #include <TCanvas.h>
 
 StEvtGen_Daughter::StEvtGen_Daughter()
@@ -68,11 +68,22 @@ void StEvtGen_Daughter::Init(TTree *tree)
    fChain->SetBranchAddress("dPx", dPx, &b_dPx);
    fChain->SetBranchAddress("dPy", dPy, &b_dPy);
    fChain->SetBranchAddress("dPz", dPz, &b_dPz);
+   fChain->SetBranchAddress("dRPx", dRPx, &b_dRPx);
+   fChain->SetBranchAddress("dRPy", dRPy, &b_dRPy);
+   fChain->SetBranchAddress("dRPz", dRPz, &b_dRPz);
    fChain->SetBranchAddress("dE", dE, &b_dE);
    fChain->SetBranchAddress("dvx", dvx, &b_dvx);
    fChain->SetBranchAddress("dvy", dvy, &b_dvy);
    fChain->SetBranchAddress("dvz", dvz, &b_dvz);
    fChain->SetBranchAddress("dct", dct, &b_dct);
+   fChain->SetBranchAddress("d3Ddca", d3Ddca, &b_d3Ddca);
+   fChain->SetBranchAddress("ddcaXY", ddcaXY, &b_ddcaXY);
+   fChain->SetBranchAddress("ddcaZ", ddcaZ, &b_ddcaZ);
+   fChain->SetBranchAddress("d3DRdca", d3DRdca, &b_d3DRdca);
+   fChain->SetBranchAddress("dRdcaXY", dRdcaXY, &b_dRdcaXY);
+   fChain->SetBranchAddress("dRdcaZ", dRdcaZ, &b_dRdcaZ);
+   fChain->SetBranchAddress("Ncent", Ncent, &b_Ncent);
+
 
 }
 
