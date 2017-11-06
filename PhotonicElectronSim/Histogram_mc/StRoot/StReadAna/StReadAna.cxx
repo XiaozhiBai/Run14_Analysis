@@ -218,6 +218,9 @@ void StReadAna::bookHistogram()
     Dca_eta[ihist]=new TH2F(Form("Dca_eta%i",ihist),"",400,0,20,400,-0.1,0.1);
     DcaXY_eta[ihist]=new TH2F(Form("DcaXY_eta%i",ihist),"",400,0,20,400,-0.1,0.1);
     DcaZ_eta[ihist]=new TH2F(Form("DcaZ_eta%i",ihist),"",400,0,20,400,-0.1,0.1);
+
+    DcaXY_D0[ihist]=new TH2F(Form("DcaXY_D0%i",ihist),"",400,0,20,400,-0.1,0.1);
+    DcaZ_D0[ihist]=new TH2F(Form("DcaZ_D0%i",ihist),"",400,0,20,400,-0.1,0.1);
     
 
 
@@ -362,8 +365,8 @@ void StReadAna::bookHistogram()
     Dca_eta[ihist]->Sumw2();
     DcaXY_eta[ihist]->Sumw2();
     DcaZ_eta[ihist]->Sumw2();
-    
-
+    DcaXY_D0[ihist]->Sumw2();
+    DcaZ_D0[ihist]->Sumw2();
   }
    Gamma_pT->Sumw2();
    EtaDalitz_pT->Sumw2();
@@ -572,6 +575,13 @@ void StReadAna::read(TString fileName)
 		  mh2piDcaXYVspt_orig[2]->Fill(McTrack->rpt,McTrack->dcaxy,weight_pi0);
 		}
 	    }
+	  if((McTrack->geantId==2||McTrack->geantId==3)&&fabs(McTrack->pgeantId)==421)
+	    {
+
+	       DcaXY_D0[1]->Fill(McTrack->rpt,McTrack->dcaxy);
+	       DcaZ_D0[1]->Fill(McTrack->rpt,McTrack->dcaz);
+	    }
+
 	}
     }
   
@@ -909,6 +919,9 @@ void StReadAna::WriteHistogram()
     DcaXY_eta[ihist]->Write();
     DcaZ_eta[ihist]->Write();
     
+    DcaXY_D0[ihist]->Write();
+    DcaZ_D0[ihist]->Write();
+
 
   }
   		

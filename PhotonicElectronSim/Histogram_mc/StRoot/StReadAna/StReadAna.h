@@ -208,6 +208,12 @@ class StReadAna : public StMaker
   TH2F * Dca_eta[3];
   TH2F * DcaXY_eta[3];
   TH2F * DcaZ_eta[3];
+
+
+  //dca D0
+  TH2F * DcaXY_D0[3];
+  TH2F * DcaZ_D0[3];
+
   
 
   TH1F * Events_gamma[3];

@@ -66,7 +66,7 @@ Int_t StPicoMcAnaMaker::Init(){
     "geantId:p:pt:svx:svy:svz:pgeantId:pp:ppt:"
     "phi:pphi:y:py:eta:peta:label:plabel:gplabel:"
     "rp:rpt:reta:rphi:nfit:ncom:"
-    "nmax:vx:vy:vz:dca:dcaxy:dcaz:isHFT:mcHFT:trueHFT:chi2:"
+    "nmax:vx:vy:vz:dca:dcaxy:dcaz:dcazLine:isHFT:mcHFT:trueHFT:chi2:"
     "nDedxPts:dedx:dedx_2:nSigPi:nSigK:nSigP:nSigE:"
     "bemcId:btowAdc0:btowE0:btowE:bemcDistZ:bemcDistPhi:bsmdNEta:bsmdNPhi:btowId:"
     "pr_rp:pr_rpT:stpcx:stpcy:stpcz:gpgeantId:gppt";
@@ -76,10 +76,10 @@ Int_t StPicoMcAnaMaker::Init(){
   const char* var_Pair = 
     "p1geantId:p1p:p1pt:p1svx:p1svy:p1svz:p1pgeantId:"
     "p1pp:p1ppt:p1eta:p1peta:p1label:p1rp:p1rpt:p1reta:"
-    "p1rphi:p1ndedx:p1nfit:p1ncom:p1nmax:p1dca:p1dcaxy:p1dcaz:t1isHFT:t1mcHFT:t1trueHFT:p1chi2:"
+    "p1rphi:p1ndedx:p1nfit:p1ncom:p1nmax:p1dca:p1dcaxy:p1dcaz:p1dcazLine:t1isHFT:t1mcHFT:t1trueHFT:p1chi2:"
     "p2geantId:p2p:p2pt:p2svx:p2svy:p2svz:p2pgeantId:"
     "p2pp:p2ppt:p2eta:p2peta:p2label:p2rp:p2rpt:p2reta:"
-    "p2rphi:p2nfit:p2ndedx:p2ncom:p2nmax:p2dca:p2dcaxy:p2dcaz:t2isHFT:t2mcHFT:t2trueHFT:p2chi2:"
+    "p2rphi:p2nfit:p2ndedx:p2ncom:p2nmax:p2dca:p2dcaxy:p2dcaz:p2dcazLine:t2isHFT:t2mcHFT:t2trueHFT:p2chi2:"
     "vx:vy:vz:massDCA:mcMassPair:pairDCA:pairPT:theta:xpair:ypair:zpair:mult:dist:"
     "p1bemcId:p1btowAdc0:p1btowE0:p1btowE:p1bemcDistZ:p1bemcDistPhi:p1bsmdNEta:p1bsmdNPhi:p1btowId:"
     "p2bemcId:p2btowAdc0:p2btowE0:p2btowE:p2bemcDistZ:p2bemcDistPhi:p2bsmdNEta:p2bsmdNPhi:p2btowId:"
@@ -422,9 +422,21 @@ int StPicoMcAnaMaker::fill_mTuple_MC(StPicoMcEvent* mcEvent, StPicoEvent *Event,
 	      StThreeVectorF dcaPoint = helix.at(helix.pathLength(pVtx.x(), pVtx.y()));
 	      t1dcaZ = dcaPoint.z() - pVtx.z();
 	      t1dcaXY=(float) helix.geometricSignedDistance(pVtx.x(), pVtx.y()); 
+	      t1dcaZ = dcaPoint.z() - pVtx.z();
+
+
+	      double thePath = helix.pathLength(pVtx);
+	      StThreeVectorF dcaPos = helix.at(thePath); 
+
+	      StThreeVectorF posDiff = dcaPos - pVtx; 
+	      StThreeVectorF mGMom = helix.momentumAt(thePath,mField);   
+	      if(sin(mGMom.theta())==0) t1dcaZLine = -9999;  
+	      else
+		t1dcaZLine = ((-posDiff.x()*cos(mGMom.phi())-posDiff.y()*sin(mGMom.phi()))*cos(mGMom.theta())/sin(mGMom.theta())+posDiff.z());
 	      t1isHFT=Trk1->isHFTTrack();
 	      
-	      
+	      // cout<< t1dcaZLine<<endl;
+
 	      dedx =Trk1->nHitsDedx();
 	      nSigPi =Trk1->nSigmaPion();
 	      nSigK =Trk1->nSigmaKaon();
@@ -476,6 +488,7 @@ int StPicoMcAnaMaker::fill_mTuple_MC(StPicoMcEvent* mcEvent, StPicoEvent *Event,
       s_nt_nt[ii++] = t1dca;
       s_nt_nt[ii++] = t1dcaXY;
       s_nt_nt[ii++] = t1dcaZ;
+      s_nt_nt[ii++] = t1dcaZLine;
       s_nt_nt[ii++] = t1isHFT;
       s_nt_nt[ii++] = t1mcHFT;
       s_nt_nt[ii++] = t1trueHFT;
@@ -672,6 +685,15 @@ int StPicoMcAnaMaker::fill_mTuple_MC(StPicoMcEvent* mcEvent, StPicoEvent *Event,
  	  StThreeVectorF dcaPoint = helix.at(helix.pathLength(pVtx.x(), pVtx.y()));
  	  t2dcaZ = dcaPoint.z() - pVtx.z();
  	  t2dcaXY=(float) helix.geometricSignedDistance(pVtx.x(), pVtx.y()); 
+
+	  double thePath = helix.pathLength(pVtx);
+	  StThreeVectorF dcaPos = helix.at(thePath);
+	  StThreeVectorF mGMom = helix.momentumAt(thePath,mField);   
+	  StThreeVectorF posDiff = dcaPos - pVtx; 
+	  if(sin(mGMom.theta())==0) t2dcaZLine = -9999;
+	  else
+	    t2dcaZLine=	 (-posDiff.x()*cos(mGMom.phi())-posDiff.y()*sin(mGMom.phi()))*cos(mGMom.theta())/sin(mGMom.theta())+posDiff.z();
+
 	  t2isHFT=Trk2->isHFTTrack();
  	  t2pr_rp =  Trk2->pMom().mag();
  	  t2pr_rpT = Trk2->pMom().perp();
@@ -745,6 +767,7 @@ int StPicoMcAnaMaker::fill_mTuple_MC(StPicoMcEvent* mcEvent, StPicoEvent *Event,
       p_nt_nt[ii++] = t1dca;
       p_nt_nt[ii++] = t1dcaXY;
       p_nt_nt[ii++] = t1dcaZ;
+      p_nt_nt[ii++] = t1dcaZLine;
       p_nt_nt[ii++] = t1isHFT;
       p_nt_nt[ii++] = t1mcHFT;
       p_nt_nt[ii++] = t1trueHFT;
@@ -773,6 +796,7 @@ int StPicoMcAnaMaker::fill_mTuple_MC(StPicoMcEvent* mcEvent, StPicoEvent *Event,
       p_nt_nt[ii++] = t2dca;
       p_nt_nt[ii++] = t2dcaXY;
       p_nt_nt[ii++] = t2dcaZ;
+      p_nt_nt[ii++] = t2dcaZLine;
       p_nt_nt[ii++] = t2isHFT;
       p_nt_nt[ii++] = t2mcHFT;
       p_nt_nt[ii++] = t2trueHFT;
@@ -933,6 +957,7 @@ void StPicoMcAnaMaker:: Reset_t1()
   t1key = -9999;
   t1dca = -9999;
   t1dcaZ=-9999;
+  t1dcaZLine=-9999;
   t1dcaXY=-9999;
   t1isHFT=-9999;
   t1mcHFT=-9999;
@@ -968,6 +993,7 @@ void StPicoMcAnaMaker:: Reset_t2()
   t2key = -9999;
   t2dca = -9999;
   t2dcaZ=-9999;
+  t2dcaZLine=-9999;
   t2dcaXY=-9999;
   t2isHFT=-9999;
   t2mcHFT=-9999;

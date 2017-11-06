@@ -97,6 +97,7 @@ class StPicoMcAnaMaker : public StMaker
   float t1dca;
   float  t1dcaZ;
   float t1dcaXY;
+  float t1dcaZLine;
   float t1isHFT;	  
   float t1mcHFT;	  
   float t1trueHFT;	  
@@ -117,6 +118,7 @@ class StPicoMcAnaMaker : public StMaker
   float t2key;
   float t2dca;
   float  t2dcaZ;
+  float t2dcaZLine;
   float t2dcaXY;
   float t2isHFT;
   float t2mcHFT;
