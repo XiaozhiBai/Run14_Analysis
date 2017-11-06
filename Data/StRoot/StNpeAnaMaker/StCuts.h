@@ -45,7 +45,7 @@ namespace cuts
   const Float_t gDca = 1.5;
   const Float_t tofbeta=0.025; 
   const Float_t tof_Y=1.8;
-  const Float_t  Nsigama_electron_low=-0.5;
+  const Float_t  Nsigama_electron_low=-1;
   const Float_t  Nsigama_electron_high=3;
   const Float_t min_pT_cut_BEMC=1;
   const Float_t max_pT_cut_Tof=4;
