@@ -42,6 +42,10 @@ class StEvtGen_Ana : public StMaker
   TGraph* B_pp200_fonll;
   TGraph* D_pp200_fonll;
 
+  TGraph *Graph_from_F_levy_D0_0_80;
+  TGraph *Graph_from_F_levy_Dpm_0_80;
+  TGraph *Graph_from_F_levy_Ds_0_80;
+  TGraph *Graph_from_F_levy_Lc_0_80;
   
   TH2F * mh2D0DcaVspt[3];
   TH2F * mh2DplusDcaVspt[3];
@@ -51,14 +55,21 @@ class StEvtGen_Ana : public StMaker
 
   TH2F *  mh2D0rDcaVspt[3];
   TH2F *  mh2DplusrDcaVspt[3];
+  TH2F *  mh2DsplusrDcaVspt[3];
+  TH2F *  mh2LcrDcaVspt[3];
+
   TH2F *  mh2B0rDcaVspt[3];
   TH2F*  mh2BplusrDcaVspt[3];
-  TH2F *  mh2LcrDcaVspt[3];
+
+
+
+
 
   TH2F *mh2pi0DcaVspt[3];
   TH2F *mh2pi0rDcaVspt[3];
   TH2F *mh2etaDcaVspt[3];
   TH2F *mh2etarDcaVspt[3];
+
 
 
   TH2F *mh2McptVsEta;
@@ -92,8 +103,15 @@ class StEvtGen_Ana : public StMaker
   TH1F *  mh2OcB0cTao;
   TH1F*  mh2OcB0barcTao;
 
+  //input and outPut pT Eta Phi check
+  TH2F *  mh2Lcplus_pT_Eta;
+  TH2F *  mh2D0_pT_Eta;
+  TH2F *  mh2Bplus_pT_Eta;
+
 
   
+
+
   
   /* TH1F * mh1pt; */
   /* TH1F*  mh1ptBde; */

@@ -7,13 +7,12 @@ star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run
 star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Dplus.list",typeID=411 #Dplus
 star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Dminus.list",typeID=-411 #Dminus
 
-#    star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=431 #Ds plus
-#   star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=-431 #Ds minus
-#  star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=4122 #Lc plus
-# star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=-4122 #Lc minus
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Ds_plus.list",typeID=431 #Ds_plus
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Ds_minus.list",typeID=-431 #Ds_minus
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Lc_plus.list",typeID=4122 #Lc_plus
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Lc_minus.list",typeID=-4122 #Lc_minus
 
-
-#    star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=511 #B0
-#   star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=-511 #B0bar
-#  star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=521 #Bplus
-#  star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/D0.list", typeID=-521 #Bminus
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/B0.list",typeID=511  #B0
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/B0bar.list",typeID=-511 #D0bar
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Bplus.list",typeID=521 #Dplus
+star-submit-template -template submit.xml -entities filelist="/star/u/xiao00/Run14_Analysis/FastSim/Ana/Bminus.list",typeID=-521 #Dminus

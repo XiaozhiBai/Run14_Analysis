@@ -12,17 +12,22 @@ StEvtGen_Ana::StEvtGen_Ana(const char* outName)
 {
   mOutputFile=new TFile(outName,"RECREATE");
   TFile *input_pi0=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Weight.root","READ");
-   Weight_pt_pi=(TH1D *) input_pi0->Get("Pi"); 
-   Weight_pt_eta=(TH1D *) input_pi0->Get("Eta"); 
+  Weight_pt_pi=(TH1D *) input_pi0->Get("Pi"); 
+  Weight_pt_eta=(TH1D *) input_pi0->Get("Eta"); 
    
-   gr_Weight_pt_pi=new TGraph(Weight_pt_pi);
-   gr_Weight_pt_eta=new TGraph(Weight_pt_eta);
+  gr_Weight_pt_pi=new TGraph(Weight_pt_pi);
+  gr_Weight_pt_eta=new TGraph(Weight_pt_eta);
    
    
-   TFile *weight_Charm_data=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Charm_pp200_data.root","READ");
-   TFile *weight_Charm_fonll=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/D0_pp200_FONALL.root","READ");
-   TFile *weight_bottom_fonll=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/B_pp200_FONALL.root","READ");
+  TFile *weight_Charm_data=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Charm_pp200_data.root","READ");
+  TFile *weight_Charm_fonll=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/D0_pp200_FONALL.root","READ");
+  TFile *weight_bottom_fonll=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/B_pp200_FONALL.root","READ");
  
+
+  //  TFile *weight_Charm_Data = new TFile("/star/u/xiao00/Run14_Analysis/FastSim/StRoot/StEvtGen_Ana/weight_charm_Fit_data.root","READ"); // from xiaolong;
+  TFile *weight_Charm_Data = new TFile("/star/u/xiao00/Run14_Analysis/FastSim/StRoot/StEvtGen_Ana/weight_charm_Fit_data_0_80.root","READ"); // from xiaolong;
+
+
 
   // Weight_pt=(TH1D *) input->Get("hFit0"); 
 
@@ -30,11 +35,18 @@ StEvtGen_Ana::StEvtGen_Ana(const char* outName)
   B_pp200_fonll=(TGraph *) weight_bottom_fonll->Get("B_Spectra_pp200");
   D_pp200_fonll=(TGraph *) weight_Charm_fonll->Get("D0_Spectra_pp200");
 
+  Graph_from_F_levy_D0_0_80=(TGraph *) weight_Charm_Data->Get("Graph_from_F_levy_D0_0_80");
+  Graph_from_F_levy_Dpm_0_80=(TGraph *) weight_Charm_Data->Get("Graph_from_F_levy_Dpm_0_80");
+  Graph_from_F_levy_Ds_0_80=(TGraph *) weight_Charm_Data->Get("Graph_from_F_levy_Ds_0_80");
+  Graph_from_F_levy_Lc_0_80=(TGraph *) weight_Charm_Data->Get("Graph_from_F_levy_Lc_0_80");
+
+
+
 
   TFile *weight_Charm_data_fonll=new TFile("/star/u/xiao00/Run14/work_AuAu200_NPE/Fast_Simulation/Decay_table/Charm_dsigma_dpt_dy.root","READ");  
-   gr_pp_specatra= (TGraphErrors *)weight_Charm_data_fonll->Get("gr_pp_specatra");
+  gr_pp_specatra= (TGraphErrors *)weight_Charm_data_fonll->Get("gr_pp_specatra");
 
-   cout<<" load the weight function"<<endl;
+  cout<<" load the weight function"<<endl;
 }
 StEvtGen_Ana::~StEvtGen_Ana()
 {
@@ -64,6 +76,7 @@ void StEvtGen_Ana::bookHistogram()
     mh2D0rDcaVspt[ihist]=new TH2F(Form("mh2D0rDcaVspt%i",ihist),"",400,0,20,400,-0.1,0.1);
     mh2LcrDcaVspt[ihist]=new TH2F(Form("mh2LcrDcaVspt%i",ihist),"",400,0,20,400,-0.1,0.1);
     mh2DplusrDcaVspt[ihist]=new TH2F(Form("mh2DplusrDcaVspt%i",ihist),"",400,0,20,400,-0.1,0.1);
+    mh2DsplusrDcaVspt[ihist]=new TH2F(Form("mh2DsplusrDcaVspt%i",ihist),"",400,0,20,400,-0.1,0.1);
     
     mh2B0DcaVspt[ihist]=new TH2F(Form("mh2B0DcaVspt%i",ihist),"",400,0,20,400,-0.1,0.1);
     mh2BplusDcaVspt[ihist]=new TH2F(Form("mh2BplusDcaVspt%i",ihist),"",400,0,20,400,-0.1,0.1);
@@ -79,11 +92,15 @@ void StEvtGen_Ana::bookHistogram()
 
     mh2D0DcaVspt[ihist]->Sumw2();
     mh2DplusDcaVspt[ihist]->Sumw2();
+
     mh2D0rDcaVspt[ihist]->Sumw2();
     mh2DplusrDcaVspt[ihist]->Sumw2();
-    
+    mh2DsplusrDcaVspt[ihist]->Sumw2();
+    mh2LcrDcaVspt[ihist]->Sumw2();
+
     mh2B0DcaVspt[ihist]->Sumw2(); 
     mh2BplusDcaVspt[ihist]->Sumw2();
+
     mh2B0rDcaVspt[ihist]->Sumw2();
     mh2BplusrDcaVspt[ihist]->Sumw2();
     
@@ -123,6 +140,11 @@ void StEvtGen_Ana::bookHistogram()
   mh2B0_electron_delta_CosPhi =new TH2F("mh2B0_electron_delta_CosPhi","",100,0,10,100,-1.2,1.2);
   mh2Bplus_electron_delta_CosPhi =new TH2F("mh2Bplus_electron_delta_CosPhi","",100,0,10,100,-1.2,1.2);
 
+  mh2Lcplus_pT_Eta =new TH2F("mh2Lcplus_pT_Eta","",400,0,20,100,-1.5,1.5);
+  mh2D0_pT_Eta =new TH2F("mh2D0_pT_Eta","",400,0,20,100,-1.5,1.5);
+  mh2Bplus_pT_Eta =new TH2F("mh2Bplus_pT_Eta","",400,0,20,100,-1.5,1.5);
+
+
   // mh2B0cTao=new TH1F("mh2B0cTao","",2000,0,10);
   // mh2DpluscTao=new TH1F("mh2DpluscTao","",2000,0,10);
   // mh2BpluscTao=new TH1F("mh2BpluscTao","",2000,0,10);
@@ -153,7 +175,13 @@ void StEvtGen_Ana::bookHistogram()
   // Ocilation
   mh2OcB0cTao->Sumw2(); 
   mh2OcB0barcTao->Sumw2(); 
-   cout<<" book histogram done !"<<endl;
+
+
+  mh2Lcplus_pT_Eta->Sumw2(); 
+  mh2D0_pT_Eta->Sumw2(); 
+  mh2Bplus_pT_Eta->Sumw2(); 
+
+  cout<<" book histogram done !"<<endl;
 }
 void StEvtGen_Ana::read(TString fileName)
 {
@@ -163,9 +191,9 @@ void StEvtGen_Ana::read(TString fileName)
   StEvtGen_Daughter * Daughter=new StEvtGen_Daughter();
   Daughter->Init(Tree);
 
-    for(Int_t iEvent=0;iEvent<Tree->GetEntries();iEvent++)//
-      //for(Int_t iEvent=0;iEvent<1e6;iEvent++)//
-     {
+  for(Int_t iEvent=0;iEvent<Tree->GetEntries();iEvent++)//
+    //for(Int_t iEvent=0;iEvent<1e6;iEvent++)//
+    {
       if(iEvent%10000==0)
 	cout<<"working on Event  "<<iEvent<<endl;
       Daughter->GetEntry(iEvent);
@@ -183,13 +211,13 @@ void StEvtGen_Ana::read(TString fileName)
 	  double pathlenth= sqrt(Daughter->dvx[iDaughter]*Daughter->dvx[iDaughter]+Daughter->dvy[iDaughter]*Daughter->dvy[iDaughter]+Daughter->dvz[iDaughter]*Daughter->dvz[iDaughter]);
 	  double g_ma=Daughter->mE[iDaughter]/sqrt(Daughter->mE[iDaughter]*Daughter->mE[iDaughter] - (Daughter->mPx[iDaughter]*Daughter->mPx[iDaughter]+Daughter->mPy[iDaughter]*Daughter->mPy[iDaughter]+Daughter->mPz[iDaughter]*Daughter->mPz[iDaughter]));
 
-	  if(Daughter->mpdg[iDaughter]==511)
-	    {
-	      if(Daughter->dpdg[iDaughter]!=-511)
-		mh2B0cTao->Fill(Daughter->dct[iDaughter]/g_ma);
-	      if(Daughter->dpdg[iDaughter]==-511)
-		mh2OcB0barcTao->Fill(Daughter->dct[iDaughter]/g_ma);
-	    }
+	  // if(Daughter->mpdg[iDaughter]==511)
+	  //   {
+	  //     if(Daughter->dpdg[iDaughter]!=-511)
+	  // 	mh2B0cTao->Fill(Daughter->dct[iDaughter]/g_ma);
+	  //     if(Daughter->dpdg[iDaughter]==-511)
+	  // 	mh2OcB0barcTao->Fill(Daughter->dct[iDaughter]/g_ma);
+	  //   }
   	  
 	  if(abs(Daughter->dpdg[iDaughter])==11&&fabs(dMom.PseudoRapidity())<0.7)
 	    {
@@ -199,103 +227,74 @@ void StEvtGen_Ana::read(TString fileName)
 		{
 		  //  cout<<" this is D0"<<endl;
 
-		   // cout<< "electron phi"<< dMom.Phi()<< " D0 Phi"<< mMom.Phi()<<" Cos(Phi_e-parent_e)"<< TMath::Cos(dMom.Phi()-mMom.Phi())<<endl;
+		  // cout<< "electron phi"<< dMom.Phi()<< " D0 Phi"<< mMom.Phi()<<" Cos(Phi_e-parent_e)"<< TMath::Cos(dMom.Phi()-mMom.Phi())<<endl;
+		  // mh2D0_electron_delta_CosPhi->Fill(dMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
 
-		  mh2D0_electron_delta_CosPhi->Fill(dMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
-
-		  mh2D0DcaVspt[0]->Fill(dMom.Pt(),Daughter->d3Ddca[iDaughter]/10000.,weight_factor);
 		  mh2D0rDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
-
-		  mh2D0DcaVspt[1]->Fill(dMom.Pt(),Daughter->ddcaXY[iDaughter]/10000.,weight_factor);
 		  mh2D0rDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
-		  
-		  mh2D0DcaVspt[2]->Fill(dMom.Pt(),Daughter->ddcaZ[iDaughter]/10000.,weight_factor);
 		  mh2D0rDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
-	
-		  //--------------------LC
-		 
-		  mh2LcrDcaVspt[0]->Fill(drMom.Pt(),0.5*Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
-		  mh2LcrDcaVspt[1]->Fill(drMom.Pt(),0.5*Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
-		  mh2LcrDcaVspt[2]->Fill(drMom.Pt(),0.5*Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
-	
 
+		  mh2D0_pT_Eta->Fill(drMom.Pt(),dMom.Eta(),weight_factor);
 		}
 	      //Dplus
 	      if(abs(Daughter->mpdg[iDaughter])==411)
 		{
-		  mh2Dplus_electron_delta_CosPhi->Fill(dMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
+		  // mh2Dplus_electron_delta_CosPhi->Fill(drMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
 
-		  mh2DplusDcaVspt[0]->Fill(dMom.Pt(),Daughter->d3Ddca[iDaughter]/10000.,weight_factor);
 		  mh2DplusrDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
-
-		  mh2DplusDcaVspt[1]->Fill(dMom.Pt(),Daughter->ddcaXY[iDaughter]/10000.,weight_factor);
 		  mh2DplusrDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
-		  
-		  mh2DplusDcaVspt[2]->Fill(dMom.Pt(),Daughter->ddcaZ[iDaughter]/10000.,weight_factor);
 		  mh2DplusrDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
 
 		}
-
+	      //Ds_plus
+	      if(abs(Daughter->mpdg[iDaughter])==431)
+		{
+		  mh2DsplusrDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
+		  mh2DsplusrDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
+		  mh2DsplusrDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
+		}
+	      //Lc_plus
+	      if(abs(Daughter->mpdg[iDaughter])==4122)
+		{
+		  mh2LcrDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
+		  mh2LcrDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
+		  mh2LcrDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
+		  mh2Lcplus_pT_Eta->Fill(drMom.Pt(),dMom.Eta(),weight_factor);
+		}
 	      //B0 
 	      if(abs(Daughter->mpdg[iDaughter])==511)
 		{
 		  // cout<< " this is B0 "<< endl;
 		  // cout<< Daughter->dvx[iDaughter]<<endl;
-		  mh2B0_electron_delta_CosPhi->Fill(dMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
-		  
-		  mh2B0DcaVspt[0]->Fill(dMom.Pt(),Daughter->d3Ddca[iDaughter]/10000.,weight_factor);
+		  // mh2B0_electron_delta_CosPhi->Fill(drMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
 		  mh2B0rDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
-
-
-		  mh2B0DcaVspt[1]->Fill(dMom.Pt(),Daughter->ddcaXY[iDaughter]/10000.,weight_factor);
 		  mh2B0rDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
-		  
-		  mh2B0DcaVspt[2]->Fill(drMom.Pt(),Daughter->ddcaZ[iDaughter]/10000.,weight_factor);
 		  mh2B0rDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
-
 		}
 	      //Bplus
 	      if(abs(Daughter->mpdg[iDaughter])==521)
 		{
-		  mh2Bplus_electron_delta_CosPhi->Fill(dMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
-		  mh2BplusDcaVspt[0]->Fill(dMom.Pt(),Daughter->d3Ddca[iDaughter]/10000.,weight_factor);
+		  // mh2Bplus_electron_delta_CosPhi->Fill(drMom.Pt(),TMath::Cos(dMom.Phi()-mMom.Phi()),weight_factor);
+
 		  mh2BplusrDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor);
-
-
-		  mh2BplusDcaVspt[1]->Fill(dMom.Pt(),Daughter->ddcaXY[iDaughter]/10000.,weight_factor);
 		  mh2BplusrDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor);
-		  
-		  mh2BplusDcaVspt[2]->Fill(drMom.Pt(),Daughter->ddcaZ[iDaughter]/10000.,weight_factor);
 		  mh2BplusrDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor);
-
+		  mh2Bplus_pT_Eta->Fill(drMom.Pt(),dMom.Eta(),weight_factor);
 		}
+
+
 	      if(abs(Daughter->mpdg[iDaughter])==111)
 		{
-		  
-		  mh2pi0DcaVspt[0]->Fill(dMom.Pt(),Daughter->d3Ddca[iDaughter]/10000.,weight_factor); 
 		  mh2pi0rDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor); 
-
-		  mh2pi0DcaVspt[1]->Fill(dMom.Pt(),Daughter->ddcaXY[iDaughter]/10000.,weight_factor); 
 		  mh2pi0rDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor); 
-
-		  mh2pi0DcaVspt[2]->Fill(dMom.Pt(),Daughter->ddcaZ[iDaughter]/10000.,weight_factor); 
 		  mh2pi0rDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor); 
-		  
-
-		    }
+		}
 
 	      if(abs(Daughter->mpdg[iDaughter])==221)
 		{
-		  
-		  mh2etaDcaVspt[0]->Fill(dMom.Pt(),Daughter->d3Ddca[iDaughter]/10000.,weight_factor); 
 		  mh2etarDcaVspt[0]->Fill(drMom.Pt(),Daughter->d3DRdca[iDaughter]/10000.,weight_factor); 
-
-		  mh2etaDcaVspt[1]->Fill(dMom.Pt(),Daughter->ddcaXY[iDaughter]/10000.,weight_factor); 
 		  mh2etarDcaVspt[1]->Fill(drMom.Pt(),Daughter->dRdcaXY[iDaughter]/10000.,weight_factor); 
-
-		  mh2etaDcaVspt[2]->Fill(dMom.Pt(),Daughter->ddcaZ[iDaughter]/10000.,weight_factor); 
 		  mh2etarDcaVspt[2]->Fill(drMom.Pt(),Daughter->dRdcaZ[iDaughter]/10000.,weight_factor); 
-		  
 		}
 
 	      if(Daughter->mpdg[iDaughter]==421)
@@ -339,6 +338,10 @@ void StEvtGen_Ana::WriteHistogram()
 
   mOutputFile->cd();
   
+  mh2Lcplus_pT_Eta->Write(); 
+  mh2D0_pT_Eta->Write(); 
+  mh2Bplus_pT_Eta->Write(); 
+
 
   for(Int_t ihist=0;ihist<3;ihist++){
 
@@ -351,10 +354,17 @@ void StEvtGen_Ana::WriteHistogram()
     if( mh2D0rDcaVspt[ihist]->GetEntries()!=0)
       {
 	mh2D0rDcaVspt[ihist]->Write();
+      }
+    if(mh2LcrDcaVspt[ihist]->GetEntries()!=0)
+      {
 	mh2LcrDcaVspt[ihist]->Write();
       }
+
     if( mh2DplusrDcaVspt[ihist]->GetEntries()!=0)
       mh2DplusrDcaVspt[ihist]->Write();
+
+    if( mh2DsplusrDcaVspt[ihist]->GetEntries()!=0)
+      mh2DsplusrDcaVspt[ihist]->Write();
     
     if( mh2B0DcaVspt[ihist]->GetEntries()!=0)
       mh2B0DcaVspt[ihist]->Write();
@@ -392,9 +402,9 @@ void StEvtGen_Ana::WriteHistogram()
     
   }
   if( mh2D0cTao->GetEntries()!=0)
-  mh2D0cTao->Write();
+    mh2D0cTao->Write();
   if( mh2B0cTao->GetEntries()!=0)
-  mh2B0cTao->Write();
+    mh2B0cTao->Write();
 
   if( mh2DpluscTao->GetEntries()!=0)
     mh2DpluscTao->Write();
@@ -402,18 +412,18 @@ void StEvtGen_Ana::WriteHistogram()
     mh2BpluscTao->Write();
   //
   if( mh2D0barcTao->GetEntries()!=0)
-  mh2D0barcTao->Write();
+    mh2D0barcTao->Write();
   if( mh2B0barcTao->GetEntries()!=0)
-  mh2B0barcTao->Write();
+    mh2B0barcTao->Write();
 
   if( mh2DminuscTao->GetEntries()!=0)
     mh2DminuscTao->Write();
   if( mh2BminuscTao->GetEntries()!=0)
     mh2BminuscTao->Write();
   if(mh2OcB0cTao->GetEntries()!=0)
-  mh2OcB0cTao->Write();
+    mh2OcB0cTao->Write();
   if(mh2OcB0barcTao->GetEntries()!=0)
-  mh2OcB0barcTao->Write();
+    mh2OcB0barcTao->Write();
 
   if(mh2McptVsEta->GetEntries()!=0)
     mh2McptVsPhi->Write();
@@ -447,17 +457,40 @@ Double_t StEvtGen_Ana::Weight(Float_t pt,Int_t pid)
   // D_pp200_fonll;
 
   Double_t weight=0; 
-  if(abs(pid)==421||abs(pid)==411)
-    //weight=  D_pp200_data->Eval(pt);
-        weight=D_pp200_fonll->Eval(pt);
+  // if(abs(pid)==421||abs(pid)==411||abs(pid)==431||abs(pid)==4122)
+  //  g weight=  D_pp200_data->Eval(pt);
+  //   weight=D_pp200_fonll->Eval(pt);
   //  weight=gr_pp_specatra->Eval(pt);
+  //    weight=Graph_from_F_levy_D0_0_80->Eval(pt);
+
+
+  if(abs(pid)==421&&pt<20)
+    weight=Graph_from_F_levy_D0_0_80->Eval(pt);
+  
+  if(abs(pid)==411&&pt<20)
+    weight=Graph_from_F_levy_Dpm_0_80->Eval(pt);
+  
+  if(abs(pid)==431&&pt<20)
+    weight=Graph_from_F_levy_Ds_0_80->Eval(pt);
+
+  if(abs(pid)==4122&&pt<20)
+    weight=Graph_from_F_levy_Lc_0_80->Eval(pt);
+
+  
+
   if(abs(pid)==521||abs(pid)==511)
     weight=B_pp200_fonll->Eval(pt);
+
+  // if(abs(pid)==421)
+  //   weight=Graph_from_F_levy_D0_10_40->Eval(pt);
   
+
+
+
   if(abs(pid)==111)
     weight=gr_Weight_pt_pi->Eval(pt);
   if(abs(pid)==221)
     weight=gr_Weight_pt_eta->Eval(pt);
-      return weight;
+  return weight;
   //      return 1;  
 }

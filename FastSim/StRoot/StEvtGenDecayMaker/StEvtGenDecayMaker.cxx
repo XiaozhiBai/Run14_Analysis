@@ -276,7 +276,16 @@ void StEvtGenDecayMaker::SaveDaughter(TParticle *particle,int &Ndaughter,Int_t P
   //cout<< cent<<endl;
   v00.SetXYZ(particle->Vx()*1000.,particle->Vy()*1000.,particle->Vz()*1000.);
   // v00.SetXYZ(0.,0.,0.); //test the smear dca  
-  v00+=vertex;
+
+  //------------dcaXy and DCA Z difference check--------------------------------
+
+  //---------------------------------------------------------------------------
+  //  if(abs(Parent_pdg)==421)
+  // v00=v00*4;// move the d0 dca  points similar to B+ 
+    v00+=vertex;
+
+  //  v00+=vertex; 
+
 
   particle-> Momentum(eMom);
   TLorentzVector const eRMom = smearMom(0,eMom);
@@ -284,13 +293,34 @@ void StEvtGenDecayMaker::SaveDaughter(TParticle *particle,int &Ndaughter,Int_t P
   // TVector3 const vertex(0., 0., 0.);
   float const eDca =  dcaSigned(eMom.Vect(), v00, vertex);
   float const eRDca = dcaSigned(eRMom.Vect(), eRPos, vertex);
+
+  // if(abs(Parent_pdg)==421)
+  //   v00=3.991870*v00;
+
+  // if(abs(Parent_pdg)==411)
+  //   v00=1.573718*v00;
+
+  // if(abs(Parent_pdg)==4122)
+  //   v00=8.183*v00;
    
+  // if(abs(Parent_pdg)==521)
+  //   v00=1.0697*v00;
+
   float const eDcaXY = dcaXY(eMom.Vect(), v00, vertex);
   float const eRDcaXY = dcaXY(eRMom.Vect(), eRPos, vertex);
    
   float const eDcaZ = dcaZ(eMom.Vect(), v00, vertex);
   float const eRDcaZ = dcaZ(eRMom.Vect(), eRPos, vertex);
+
+
+  // float const eDcaXY = dcaXY(eMom.Vect(), v00, vertex);
+  // float const eRDcaXY = dcaXY(eRMom.Vect(), eRPos, v00);
    
+  // float const eDcaZ = dcaZ(eMom.Vect(), v00, vertex);
+  // float const eRDcaZ = dcaZ(eRMom.Vect(), eRPos, v00);
+   
+
+
   // cout<< cent<<"  "<< eRPos.x()<<"  "<<endl;//particle->Px()<<"  "<<fPionMomResolution->Eval(eMom.Py())<<endl;
   // cout<< cent<<"  "<< eRDca<<"  "<<eDca<<endl;//particle->Px()<<"  "<<fPionMomResolution->Eval(eMom.Py())<<endl;
   
