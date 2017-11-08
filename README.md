@@ -55,7 +55,7 @@
   
 --------------------------------------------------------------------------
 
-###  Produce the heavy flavor decay electron DCA template from data daiven fast simulation.
+### 1. Produce the heavy flavor decay electron DCA template from data daiven fast simulation.
 The different heavy flavor  electrons DCA Vs pT histogram was produced from RCF, which is described in the previous, then one need to projection the DCA in the different pT intervals, and combined charm and bottom electrons as two individual component. The measued NPE are those electrons that  dominated by the semi-leptonic decays of open heavy flavor D- and B-mesons. Since the EvtGen has many benefits to make the heavy flavor study, particular for B physics. In this simulation, the D- and B-meson (D0,D+,Ds,Lc,B0,B+) are inclueded, but the preliminary results are with out Ds and Lc. The input heavy flavor hadron pT spectrum for B mesons are  from the FONLL calculations, while the D-mesons pT spectra was from measurement, the rapidty distribution was from Pythia. The default decay table was used in the simulation, so you don't need to scale the D- and B-mesons decay electrons brach ratios, sine  all the decay channel (both simi-leptonic and hadronic) are switched on, and the decay branch ratio is kept as default, so only fragmentation-fraction should be take into account during the total charm and  and bottom decay electrons normalization and combination. The fragmentation fraction for different charm mesons are from pp for the prelimenary results, but the current results was from Au+Au 200 GeV data measurement for D0, scaled D0 by pp fragmentation-fraction into D+, Ds from data, Lc rely on the Model calculations and data measurementd. The total charm decayed electron is combined from the electrons from D0,D+.Ds,(take the difference between with and without Lc as one of the  the systematic uncertainty source), for the B-mesons decay electrons, we used 50% as the scale factor for the B0 and B+ evergare which can be found form PDG. 
 
 ### Run the code 
@@ -66,7 +66,7 @@ root -l Charm_Bottom_Decay_electrons_EvtGen.C
 ### Please Note,
  There is a flag in the code,(bool Lc_Flag=true) true means including Lc, one can switch it off to exclude the Lc contribution.
 
-### Photonic electron background DCA can be produced by the Hijing+Geant4 full detector simulation.
+### 2. Photonic electron background DCA can be produced by the Hijing+Geant4 full detector simulation.
 The photonic electrons from gamma conversions in the detector materials and $\pi0$ and $\eta$ mesons Dalitz decays. The photonic electron was reconstructed by the photonic pairs via $e^{+}e^{-}$ invariant mass and pair DCA method. We applied the ee pair mass < 0.06 GeV, ee pair dca <$ 0.6 cm) for the pair selection. There is no HFT embedding, we used Hijing+Geant simulation to extarct the DCA distribution from the photonic electrons. The simulation method is We input additional 500 photons,100 neutral pions and 100 eta mesons injected per Hijing event with flat pT , the Hijing event was reconstructed by the Geant with STAR full detector geometry, the reconstruction chain are same with data production, and same STAR software library SL16d. in order to reproduce the data, there are a few more effect was take into account in the Hijing simulation setup which is listed in the below lines. most of the this effects are extracted from data.
 
 ### Run the  code
