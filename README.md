@@ -7,18 +7,22 @@
 ## How to run the analysis
 ---------------------------
 ### 1. Produce the heavy flavor decay electron DCA template from data daiven fast simulation.
-        cd FastSim
-        starver SL16d
-        source setup.csh
-        cons.csh
-        ./run_EvtGenDecay.csh  %% To run the EvtGen Production and saved the intrestiong variable in the tree
-        ./runAna.csh	       %% Analysis the produce tree      
+```
+cd FastSim
+starver SL16d
+source setup.csh
+cons.csh
+./run_EvtGenDecay.csh  %% To run the EvtGen Production and saved the intrestiong variable in the tree
+./runAna.csh	       %% Analysis the produce tree      
+```
 ### 2. Photonic electron background DCA can be produced by the Hijing+Geant4 full detector simulation. 
 #### 2.1 Produce the Hijing and Geant sample
-        cd PhotonicElectronSim/Pico_mc
-        starver SL16d	
-        cons
-        ./submit_full.sh start#  #nRuns  %% submit the job to make the mass production, it will be spend 3-4h per job, the full production can be found at /star/u/kunsu/auau200GeVRun14/simulation_RealDetector_RealParticle_SL16d_Pixelisation/files_full/* 
+```
+cd PhotonicElectronSim/Pico_mc
+starver SL16d	
+cons
+./submit_full.sh start#  #nRuns  %% submit the job to make the mass production, it will be spend 3-4h per job, the full production can be found at /star/u/kunsu/auau200GeVRun14/simulation_RealDetector_RealParticle_SL16d_Pixelisation/files_full/* 
+```
 #### 2.2 Saved all the intrestiong variable in the analysis tree based on the produced PicoTree.
         cd PhotonicElectronSim/Ana_mc
         starver SL16d
