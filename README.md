@@ -31,33 +31,41 @@ starver SL16d
 ./run_Test.sh  %% To run a few test files.
 star-submit submit.xml
 ```
-#### Note
+#### Notes
  submit the job to analysis the full production, clean all the output directory before submit the job.
 #### 2.3 Analysis the McPico tree. fill the histogram
-        cd /PhotonicElectronSim/Histogram_mc
-        starver SL16d
-        cons
-        ./run_test.sh %%to run a few test files 
-        star-submit submit.xml %% submit the job to analysis the full production, clean all the output directory before submit the job.  
+```        
+cd /PhotonicElectronSim/Histogram_mc
+starver SL16d
+cons
+./run_test.sh %%to run a few test files 
+ star-submit submit.xml 
+```
+submit.xml is submit the job to analysis the full production, clean all the output directory before submit the job.  
  ### 3. Hadron background extracted from data.
 #### The code can be found at https://github.com/XiaozhiBai/Run14_PicoReader. Notes, we Saved only the laptons candidate in the analysis tree on the RCF, so the hadron background templte and purity study are still based on the PicoDst, which is on the PDSF.
-       cd /global/homes/x/xiao00/pwg_disk/AuAu14/Run14_PicoReader
-       starver SL16d
-       cons
-       cd Submit_Job
-       ./submitAnaTreePDSF.sh mb 0 107 167 %% submit the job from day 107 to 167
-       cd ../Merge_files 
-       ././run_hadd.sh 0 100   %% submit the job to merge the root files.
+```       
+cd /global/homes/x/xiao00/pwg_disk/AuAu14/Run14_PicoReader
+starver SL16d
+cons
+cd Submit_Job
+./submitAnaTreePDSF.sh mb 0 107 167 %% submit the job from day 107 to 167
+cd ../Merge_files 
+./run_hadd.sh 0 100   %% submit the job to merge the root files.
+```
 ### 4. Inclusive electron and Photonic electron pair reconstructed from data.
-       cd Data
-       starver SL16d
-       cons	  
-       ./runTest.sh %% To run the Analysis tree, saved the Inclusive electron and Photonic electron pairs.
-       cd submit    %% Directory for the job submission.
-       star-submit submit_16d.xml	%% submit the Job, Please notes, the default input file list is Minimum-Bias Trigger, for the BEMC trigger, you must replace the file list from Ana_mb_16d.list to Ana_htb_16d.list 
-       ./hadd.sh  0 production temp 20 %% Merge the output as a single file for the analysis  
-
-
+```
+ cd Data
+ starver SL16d
+ cons	  
+ ./runTest.sh %% To run the Analysis tree, saved the Inclusive electron and Photonic electron pairs.
+ cd submit    %% Directory for the job submission.
+ star-submit submit_16d.xml
+ ./hadd.sh  0 production temp 20 %% Merge the output as a single file for the analysis  
+```
+#### Notes 
+ Please notes, the default input file list is Minimum-Bias Trigger, for the BEMC trigger, you must replace the file list from Ana_mb_16d.list to Ana_htb_16d.list 
+  
 ## How to run the macros in the user's local computer
 #### Down load the Analysis_Macros directory into the local machine from this repo. or scp from RCF  /star/u/xiao00/Run14_Analysis/Analysis_Macros
   
