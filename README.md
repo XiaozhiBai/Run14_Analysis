@@ -68,14 +68,16 @@
     'cd	 Template_Photonic_Electron'
     'root -l -b -q Correct_hijing_and_data.C
 #### Notes, here the main input root files, 
-    - "Input/hist_MB_20170920.root" is the data from MB trigger,
-    - "Input/hist_ht_20170921.root" is the data from HT trigger,
-    - "Input/hijing_20170920.root" is hijing+geant simulation,
-    - "Phe_relative_combine_1_30.root" is relative contribution from different photonic electrons source. 
-####The output files root files
+- "Input/hist_MB_20170920.root" is the data from MB trigger,
+- "Input/hist_ht_20170921.root" is the data from HT trigger,
+- "Input/hijing_20170920.root" is hijing+geant simulation,
+- "Phe_relative_combine_1_30.root" is relative contribution from different photonic electrons source. 
+
+#### The output files root files
     - "Data_inclusive_photonic.root" which contains the inclusive electrons from data, 
     - "Photonic_electron_template.root" for the photonic electron template from Hijing+Geant Simulation. 
-####The Flag "add_HT_trigger=true", the default is included the HT trigger from data, if you intrested in the MB trigger only, just switch the the flag from true to false. 
+
+#### The Flag "add_HT_trigger=true", the default is included the HT trigger from data, if you intrested in the MB trigger only, just switch the the flag from true to false. 
 
 ### 3. Hadron background extracted from data.
 
