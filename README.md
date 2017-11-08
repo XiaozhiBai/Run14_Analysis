@@ -66,7 +66,7 @@ The photonic electrons from gamma conversions in the detector materials and $\pi
 
 ### Run the  code
 ```cd Template_Photonic_Electron
-root -l -b -q Correct_hijing_and_data.C```
+root -l -b -q Correct_hijing_and_data.C```  
 ### Notes:
 #### The Flag "add_HT_trigger=true", the default is included the HT trigger from data, if you intrested in the MB trigger only, just switch the the flag from true to false.  
 #### Here is the main input root files, 
