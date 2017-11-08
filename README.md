@@ -49,3 +49,8 @@
        star-submit submit_16d.xml	%% submit the Job, Please notes, the default input file list is Minimum-Bias Trigger, for the BEMC trigger, you must replace the file list from Ana_mb_16d.list to Ana_htb_16d.list 
        ./hadd.sh  0 production temp 20 %% Merge the output as a single file for the analysis  
 
+## How to combine different heavy flavor decay hadrons electrons template.
+
+### 1. Produce the heavy flavor decay electron DCA template from data daiven fast simulation.
+
+### 2. Produce the heavy flavor decay electron DCA template from data daiven fast simulation.
