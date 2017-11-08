@@ -91,13 +91,12 @@ root -l -b -q Correct_hijing_and_data.C
 - "Photonic_electron_template.root" for the photonic electron template from Hijing+Geant Simulation.   
 
 ### 3. Hadron background extracted from data.
-
-
+The mis-identified hadrons DCAXY template extracted from data. we applied the track quality cuts but withoutany particles identification cuts for the inclusive hadron sample, which include the π, kaon and protons. The  individual hadron template from pi, kaon, proton from TPC dE/dx selection.  
 ### Run the code 
 ```
 cd cd Template_Hadron
 root -l Hadron_Dca_from_pico.C
 ```
-### Please Note,
+### Please Note
  There are  four flag in the code, Bool_t Hadron_from_pi=true; Bool_t Hadron_from_kaon=false; //default Bool_t Hadron_from_proton=false;  Bool_t Hadron_from_hadron=false; this is the default
  setup, The pi DCA used as the hadron template, if you want to switch to the other hadron template, just switch off the pi, and switch on the other particles flag.     
