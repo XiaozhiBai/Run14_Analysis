@@ -65,20 +65,18 @@
 The photonic electrons from gamma conversions in the detector materials and $\pi0$ and $\eta$ mesons Dalitz decays. The photonic electron was reconstructed by the photonic pairs via $e^{+}e^{-}$ invariant mass and pair DCA method. We applied the ee pair mass < 0.06 GeV, ee pair dca <$ 0.6 cm) for the pair selection. There is no HFT embedding, we used Hijing+Geant simulation to extarct the DCA distribution from the photonic electrons. The simulation method is We input additional 500 photons,100 neutral pions and 100 eta mesons injected per Hijing event with flat pT , the Hijing event was reconstructed by the Geant with STAR full detector geometry, the reconstruction chain are same with data production, and same STAR software library SL16d. in order to reproduce the data, there are a few more effect was take into account in the Hijing simulation setup which is listed in the below lines. most of the this effects are extracted from data.
 
 ### Run the  code
-    `cd Template_Photonic_Electron`  
-    `root -l -b -q Correct_hijing_and_data.C`
+`cd Template_Photonic_Electron`  
+`root -l -b -q Correct_hijing_and_data.C`
 ### Notes:
 #### The Flag "add_HT_trigger=true", the default is included the HT trigger from data, if you intrested in the MB trigger only, just switch the the flag from true to false.  
 #### Here is the main input root files, 
-     - "Input/hist_MB_20170920.root" is the data from MB trigger,
-     - "Input/hist_ht_20170921.root" is the data from HT trigger,
-     - "Input/hijing_20170920.root" is hijing+geant simulation,
-     - "Phe_relative_combine_1_30.root" is relative contribution from different photonic electrons source. 
+- "Input/hist_MB_20170920.root" is the data from MB trigger,
+- "Input/hist_ht_20170921.root" is the data from HT trigger,
+- "Input/hijing_20170920.root" is hijing+geant simulation,
+- "Phe_relative_combine_1_30.root" is relative contribution from different photonic electrons source. 
 #### The output  root files
-     - "Data_inclusive_photonic.root" which contains the inclusive electrons from data, 
-     - "Photonic_electron_template.root" for the photonic electron template from Hijing+Geant Simulation.   
-
-
+- "Data_inclusive_photonic.root" which contains the inclusive electrons from data, 
+- "Photonic_electron_template.root" for the photonic electron template from Hijing+Geant Simulation.   
 
 ### 3. Hadron background extracted from data.
 
