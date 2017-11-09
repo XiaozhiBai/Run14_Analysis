@@ -127,5 +127,9 @@ cd Draw_Result
 root -l -b -q Draw_B_fraction.C
 ```
 ### Please Note
-
+- Before you start the templa fit, Make sure you have all the template ready, we well as the inclusive electron from data. put those root file under Input/ 
+- There is one flag for the DCA_XY and DCA_Z fraction fit, 'const int IHIST=0' for DCA_XY fit, 'const int IHIST=1' for DCA_Z fit。
+- Currently the hadron fraction is higher than expected, the reason is still unclear, might be the Jpsi constribution.
+- Tere is a litle bump around the DCA_Z ~ -0.02 cm, the reason need to be checked, apply vertex X and Y, one can skip the little bump via switch on/off the skip_Little_bump_with_DCAZ in the fit macros.  
+   
 
