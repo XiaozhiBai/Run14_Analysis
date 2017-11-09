@@ -21,8 +21,11 @@ cons.csh
 cd PhotonicElectronSim/Pico_mc
 starver SL16d	
 cons
-./submit_full.sh start#  #nRuns  %% submit the job to make the mass production, it will be spend 3-4h per job, the full production can be found at /star/u/kunsu/auau200GeVRun14/simulation_RealDetector_RealParticle_SL16d_Pixelisation/files_full/* 
+./submit_full.sh start#  #nRuns  
 ```
+#### Notes 
+submit the job to make the mass production, it will be spend 3-4h per job, the full production can be found at /star/u/kunsu/auau200GeVRun14/simulation_RealDetector_RealParticle_SL16d_Pixelisation/files_full/* 
+
 #### 2.2 Saved all the intrestiong variable in the analysis tree based on the produced PicoTree.
 ```
 cd PhotonicElectronSim/Ana_mc
