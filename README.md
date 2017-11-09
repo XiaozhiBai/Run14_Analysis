@@ -109,9 +109,23 @@ root -l -b -q Correct_hijing_and_data.C
 The mis-identified hadrons DCAXY template extracted from data. we applied the track quality cuts but withoutany particles identification cuts for the inclusive hadron sample, which include the π, kaon and protons. The  individual hadron template from pi, kaon, proton from TPC dE/dx selection.  
 ### Run the code 
 ```
-cd cd Template_Hadron
+cd Template_Hadron
 root -l Hadron_Dca_from_pico.C
 ```
 ### Please Note
  There are  four flag in the code, Bool_t Hadron_from_pi=true; Bool_t Hadron_from_kaon=false; //default Bool_t Hadron_from_proton=false;  Bool_t Hadron_from_hadron=false; this is the default
  setup, The pi DCA used as the hadron template, if you want to switch to the other hadron template, just switch off the pi, and switch on the other particles flag.     
+
+### 3. Fraction fit to the data inclusive electrons based on the template
+The Minut is one of important package which acts on a multi-parameter which was developed by Fortran. however, it has been implemented into the ROOT with a C++ interface, User can define the chi-square function FCN is defined via the MINUIT SetFCN member function. It is the task of MINUIT to find those values of the parameters which give the lowest value of chis-quare。
+
+### Run the code 
+```
+cd B_Fraction_Fit/TMinuit_Fit
+root -l -b -q B_fit_Minuit.C 
+cd Draw_Result
+root -l -b -q Draw_B_fraction.C
+```
+### Please Note
+
+
